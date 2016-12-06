@@ -45,8 +45,7 @@ public class Swapper{
 	String a=""+(int)(Math.random()*10);
 	String b=ALPHABET[(int)(Math.random()*26)];
 	String c=SPECIAL[(int)(Math.random()*SPECIAL.length)];
-	String d=ALPHABET[(int)(Math.random()*26)].toLowerCase();
-	return a+b+c+d;
+	return a+b+c;
     }
 
     //----------------------------------------------------------
@@ -67,7 +66,7 @@ public class Swapper{
     public static void populate(String[][] a){
 	for (int i=0; i<a.length; i++){
 	    for (int j=0; j<a[i].length; j++){
-		a[i][j]=unique();
+		a[i][j]=unique()+j;
 	    }
 	}
     }
@@ -132,7 +131,7 @@ public class Swapper{
 
 	System.out.println("\nSWAPPING ("+x1+","+y1+") WITH ("+x2+","+y2+")...");
 
-	swap(a,x1,y1,x2,y2); //test swap
+	swap(a,x1,y1,x2,y2); 
 	System.out.println(printarray(a));
 
 	/* ------testing------------
