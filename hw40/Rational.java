@@ -1,3 +1,11 @@
+/*-----------------------------
+  class Rational
+  by Clyde "Thluffy" Sinclair
+  * represents a rational number (p/q)
+  * implements Java's Comparable interface
+  -----------------------------*/
+
+
 public class Rational implements Comparable
 {
     //attributes
@@ -169,7 +177,8 @@ public class Rational implements Comparable
 
     /***
      * int compareTo(Object) -- tells which of two Rationals is greater
-     * precondition:  input not null
+     * (Comparable interface method)
+     * precondition: 
      * postcondition: 
      * Throws exception if input not an instance of class Rational.
      * returns...
