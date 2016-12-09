@@ -159,7 +159,7 @@ public class SuperArray
 	System.out.println("Printing SuperArray mayfield post-remove...");
 	System.out.println(mayfield);
 
-	mayfield.add(3,99);
+	mayfield.add(3,99);  //Q: Significance of this test call?
 	System.out.println("Printing SuperArray mayfield post-insert...");
 	System.out.println(mayfield);
 	mayfield.add(2,88);
