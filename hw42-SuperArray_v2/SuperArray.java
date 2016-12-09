@@ -83,14 +83,13 @@ public class SuperArray
 	//first expand if necessary
 	if ( _size >= _data.length )
 	    expand();
-	else {
-	    for( int i = _size; i > index; i-- ) {
-		_data[i] = _data[i-1]; 
-	    } 
-	    _data[index] = newVal;
-	    _lastPos++;
-	    _size++;
-	}
+	//traverse R->L, shifting elements to right 1 slot
+	for( int i = _size; i > index; i-- ) {
+	    _data[i] = _data[i-1]; 
+	} 
+	_data[index] = newVal;
+	_lastPos++;
+	_size++;
     }
 
 
