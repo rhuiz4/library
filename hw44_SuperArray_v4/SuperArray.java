@@ -1,5 +1,5 @@
 /**************************************************
-  class SuperArray version 3.0
+  class SuperArray version 4.0
   Wrapper class for array. Facilitates 
   *  resizing 
   *  expansion 
@@ -11,9 +11,9 @@
   ListInt interface. (ListInt.java must be in same dir as this file)
 **************************************************/
 
-public class SuperArray implements ListInt 
+public class SuperArray implements List 
 {
-    private int[] _data;  //underlying container structure
+    private Object[] _data;  //underlying container structure
     private int _lastPos; //marker for last meaningful value         
     private int _size;    //number of meaingful values
 
@@ -21,7 +21,7 @@ public class SuperArray implements ListInt
     //initializes 10-item array         
     public SuperArray()
     {
-        _data = new int[10];
+        _data = new Object[10];
         _lastPos = -1;
         _size = 0;
     }
@@ -46,7 +46,7 @@ public class SuperArray implements ListInt
     //double capacity of this instance of SuperArray
     private void expand()
     {
-        int[] temp = new int[ _data.length * 2 ];
+        Object[] temp = new Object[ _data.length * 2 ];
         for( int i = 0; i < _data.length; i++ )
             temp[i] = _data[i];
         _data = temp;
@@ -56,16 +56,24 @@ public class SuperArray implements ListInt
     //accessor method -- return value at specified index
     public int get( int index )
     {
-        return _data[index];
+	if ( index < 0 || index >= size())
+	    throw new ClassCastException("Index is out of Range");
+	else {
+	    return (int)_data[index];
+	}
     }
 
 
-    //mutator method -- set index to newVal, return old value at index
-    public int set( int index, int newVal )
+	//mutator method -- set index to newVal, return old value at index
+    public int set( int index, java.lang.Object o )
     {
-        int temp = _data[index];
-        _data[index] = newVal;
-        return temp;
+        if ( index < 0 || index >= size())
+	    throw new ClassCastException("Index is out of Range");
+	else {
+	    int temp = (int) _data[index];
+	    _data[index] = o;
+	    return temp;
+	}
     }
 
 
@@ -74,12 +82,12 @@ public class SuperArray implements ListInt
 
     //adds an item after the last item
     //returns true
-    public boolean add( int newVal )
+    public boolean add( java.lang.Object o )
     {
         //first expand if necessary                                             
         if ( _size >= _data.length )
             expand();
-        _data[_lastPos+1] = newVal;
+        _data[_lastPos+1] = o;
         _lastPos++;
         _size++;
 	return true;
@@ -88,17 +96,21 @@ public class SuperArray implements ListInt
 
     //inserts an item at index
     //shifts existing elements (starting at index) right 1 slot
-    public void add( int index, int newVal )
+    public void add( int index, java.lang.Object o )
     {
         //first expand if necessary
-        if ( _size >= _data.length )
+        if ( _size >= _data.length)
             expand();
-	for( int i = _size; i > index; i-- ) {
-	    _data[i] = _data[i-1];
+	if ( index < 0 || index >= size())
+	    throw new ClassCastException("Index is out of Range");
+	else {
+	    for( int i = _size; i > index; i-- ) {
+		_data[i] = _data[i-1];
+	    }
+	    _data[index] = o;
+	    _lastPos++;
+	    _size++;
 	}
-	_data[index] = newVal;
-	_lastPos++;
-	_size++;
     }
 
 
@@ -107,17 +119,21 @@ public class SuperArray implements ListInt
     //returns removed value
     public int remove( int index )
     {
-	int retInt = _data[index]; //store to return later
-        for( int i=index; i < _size-1; i++ ) {
-            _data[i] = _data[i+1];
-        }
-        _data[_size-1] = 0; //unnecessary                                       
-        _size--;
+	if ( index < 0 || index >= size())
+	    throw new ClassCastException("Index is out of Range");
+	else {
+	    int retInt = (int)_data[index]; //store to return later
+	    for( int i=index; i < _size-1; i++ ) {
+		_data[i] = _data[i+1];
+	    }
+	    _data[_size-1] = 0; //unnecessary                                       
+	    _size--;
         _lastPos--;
 	return retInt;
+	}
     }
 
-
+    
     //return number of meaningful items in _data
     public int size()
     {
@@ -181,7 +197,7 @@ public class SuperArray implements ListInt
 
 
 	
-	ListInt mayfield = new SuperArray();
+	List mayfield = new SuperArray();
 	System.out.println("Printing empty SuperArray mayfield...");
 	System.out.println(mayfield);
 
@@ -201,13 +217,13 @@ public class SuperArray implements ListInt
 	System.out.println("Printing SuperArray mayfield post-remove...");
 	System.out.println(mayfield);
 
-	mayfield.add(3,99);
+	mayfield.add(1,99);
 	System.out.println("Printing SuperArray mayfield post-insert...");
 	System.out.println(mayfield);
 	mayfield.add(2,88);
 	System.out.println("Printing SuperArray mayfield post-insert...");
 	System.out.println(mayfield);
-	mayfield.add(1,77);
+	mayfield.add(3,77);
 	System.out.println("Printing SuperArray mayfield post-insert...");
 	System.out.println(mayfield);
 
